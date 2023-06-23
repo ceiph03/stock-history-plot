@@ -1,6 +1,6 @@
 # stock history plot
 You can plot and calculate ROI based on historical data of tickers.
-You have to save finance.py in the same folder where your main.py is located in.
+You have to save `finance.py` in the same folder where your `main.py` is located in.
 
 `Please find stock.ipynb for an example (same as below)`
 
