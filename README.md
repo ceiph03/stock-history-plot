@@ -1,9 +1,16 @@
 # stock history plot
- plot historical data with tickers input
-
 You can plot and calculate ROI based on historical data of tickers.
+You have to save finance.py in the same folder where your main.py is located in.
 
 ```
+import finance
+import pandas as pd
+import yfinance as yf
+from datetime import datetime
+import seaborn as sns
+from matplotlib import pyplot as plt
+sns.set(font_scale=1.0)
+
 freq = 'W' #'M' -monthly investment, 'W' - weekly investment
 start = datetime(2018,6,16) # Define starting day
 end = datetime(2023,6,16) #Define ending day
