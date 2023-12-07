@@ -1,5 +1,6 @@
 import streamlit as st
 import yfinance as yf
+from datetime import date
 import pandas as pd
 import cufflinks as cf
 import datetime
@@ -26,16 +27,6 @@ tickerSymbol = st.sidebar.selectbox('Stock ticker', ticker_list) # Select ticker
 tickerData = yf.Ticker(tickerSymbol) # Get ticker data
 tickerDf = tickerData.history(period='1d', start=start_date, end=end_date) #get the historical prices for this ticker
 
-# # Ticker information 
-# string_logo = '<img src=%s>' % tickerData.info['logo_url']
-# st.markdown(string_logo, unsafe_allow_html=True)
-
-string_name = tickerData.info['longName']
-st.header('**%s**' % string_name)
-
-string_summary = tickerData.info['longBusinessSummary']
-st.info(string_summary)
-
 # Ticker data
 st.header('**Ticker data**')
 st.write(tickerDf)
@@ -43,10 +34,19 @@ st.write(tickerDf)
 # Bollinger bands
 st.header('**Bollinger Bands**')
 qf=cf.QuantFig(tickerDf,title='First Quant Figure',legend='top',name='GS')
-qf.add_bollinger_bands()
+
+# Create a layout with two columns
+col1, col2 = st.columns([2, 1])
+
+# Create a checkbox for toggling Bollinger Bands
+bollinger_days = col1.selectbox('Period', [20,40,60,120])
+add_bollinger_button = col2.button('Add Bollinger Bands')
+
+# If the user wants to show Bollinger Bands, provide an input box for the number of days
+if add_bollinger_button:
+    # Add Bollinger Bands with the specified number of days
+    qf.add_bollinger_bands(periods=bollinger_days)
+    
+
 fig = qf.iplot(asFigure=True)
 st.plotly_chart(fig)
-
-####
-st.write('---')
-st.write(tickerData.info)
